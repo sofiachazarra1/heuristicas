@@ -14,6 +14,7 @@ def busqueda_local(data, M):
     n = len(peso)
     solucion = [0 for i in range(n)]  # creamos una solucion inicial con un vector de 0's
     peso_actual = 0
+    peso_m=0
     while peso_actual < M:
         i, data = mejor_objeto_restante(data)
         if peso[i] + peso_actual <= M:
@@ -23,7 +24,7 @@ def busqueda_local(data, M):
         else:
             solucion[i] = round((M - peso_actual) / peso[i])
             peso_actual = M
-        end = time.time()
+    end = time.time()
 
     print("Usando un algoritmo Greedy para el problema de la mochila"
          " \n" + " Solución: " + str(solucion) + "\n Número de elementos: "
