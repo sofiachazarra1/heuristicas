@@ -1,6 +1,13 @@
 import random
-import src.auxiliares.read_data as aux
+import time
 
+###############################################################################################################################
+
+poblacion_size = 200
+n_sol_para_reproducir = 10*2 #Numero de hijos que queremos * 2
+probabilidad_de_mutar = 20 #Frecuencia de mutación del 0 al 100
+max_genes_mutan = 3 # Al mutar cuantos elementos queremos cambiar como máximo
+iteraciones = 200
 
 
 class Problema_Genetico(object):
@@ -129,17 +136,52 @@ def algoritmo_genetico_t(problema_genetico, k, opt, ngen, tamano, prop_cruces, p
     print(mejor_cr)
     return (problema_genetico.fitness(mejor_cr))
 
+def calcular_peso(peso,x,n):
+    peso_total = 0
+    for i in range(n):
+        if x[i] == 1:
+            peso_total += peso[i]
+    return peso_total
+
+def calcular_valor(x,valor,n):
+    valor_total = 0
+    for i in range(n):
+        if x[i] == 1:
+            valor_total += valor[i]
+    return valor_total
+
+def peso_maximo_superado(x,n,peso,peso_max):
+    peso_total = 0
+    for i in range(n):
+        if x[i] == 1:
+            peso_total += peso[i]
+    return peso_total > peso_max
+
+
 
 # Definimos nuestra funcion objetivo que utilizamos para elegir los genes
-def fun_obj(x):
-    return sum(b*(2**i) for (i,b) in enumerate(x))
+def funcion_aptitud(poblacion,peso_max):
+    aptitud = []
+    for sol in poblacion:  # Atraviesa todas las soluciones de la poblacion
+        if peso_maximo_superado(sol):  # Si supera el peso maximo entonces su valor será -(cantidad peso por encima del maximo)
+            valor = peso_max - calcular_peso(sol)
+        else:
+            valor = calcular_valor(sol)
+        aptitud.append([valor, sol])
+
+    aptitud.sort(reverse=True)  # para que me lo ordene de menor coste a mayor con su cromosoma asociado
+    poblacion_ordenada = [fila[1] for fila in aptitud]
+    return poblacion_ordenada
+
+
+start = time.process_time()
 
 
 
 cuad_gen = Problema_Genetico([0,1],
                              100,
-                             fun_obj,
-                             lambda x: (fun_obj(x))**2)
+                             funcion_aptitud,
+                             lambda x: (funcion_aptitud(x))**2)
 
 
 
@@ -148,3 +190,5 @@ print("El primer cromosoma será:"+ str(cuad_gen.decodifica))
 
 res=algoritmo_genetico_t(cuad_gen,3,max,30,30,0.7,0.1)
 print("mejor resultado será:" + str(res))
+end = time.process_time()
+print("El proceso ha tardado un total de:" + str(end-start) + "segs")
