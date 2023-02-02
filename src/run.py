@@ -4,9 +4,8 @@ from src.algoritmos.tempesimulado import temple_simulado
 
 path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
 file="00Uncorrelated/n00050/R01000/s001.kp"
-path_file=path_data+file
 
-peso_tot,num_obj,data=aux.read_data(path_file)
-data,sort_data=aux.prop_data(num_obj,data)
+peso_tot, num_obj, data = aux.read_data(path_data, file)
+data, sort_data = aux.prop_data(num_obj, data)
 
-alg=temple_simulado(sort_data,peso_tot,data)
+alg = temple_simulado(sort_data, peso_tot, data)

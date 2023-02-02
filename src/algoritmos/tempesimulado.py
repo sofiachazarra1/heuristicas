@@ -46,9 +46,8 @@ def temple_simulado(sort_data,peso_tot,data):
 
 path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
 file="00Uncorrelated/n00050/R01000/s001.kp"
-path_file = path_data+file
 
-peso_tot, num_obj, data = aux.read_data(path_file)
+peso_tot, num_obj, data = aux.read_data(path_data, file)
 data, sort_data = aux.prop_data(num_obj, data)
 solucion_temp = temple_simulado(sort_data, peso_tot, data)
 print(f"Solucion_tempe: {solucion_temp}")
