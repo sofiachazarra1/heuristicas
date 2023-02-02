@@ -31,8 +31,8 @@ def busqueda_local(data, M):
         " Tiempo de cómputo = " + str(1000 * (end - start)) + " ms")
     return solucion, peso_m
 
-    ###Para ejecutarlo directamente
-
+###Para ejecutarlo directamente
+"""
 path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
 file="00Uncorrelated/n00050/R01000/s001.kp"
 path_file=path_data+file
@@ -40,3 +40,4 @@ path_file=path_data+file
 peso_tot,num_obj,data=aux.read_data(path_file)
 data,sort_data=aux.prop_data(num_obj,data)
 busqueda_local(sort_data,peso_tot)
+"""
