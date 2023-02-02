@@ -4,9 +4,6 @@ import src.auxiliares.read_data as aux
 def busqueda_local(data, M):
     start=time.time()
     peso = data["weight"].tolist()
-
-    beneficio = data["imp"].tolist()
-
     def mejor_objeto_restante(data):
         mejor_obj = data.index[0]
         return mejor_obj - 2, data.drop(mejor_obj)
