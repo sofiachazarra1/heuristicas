@@ -14,10 +14,10 @@ def read_data(path_file):
     print(f"El peso maximo será: {peso_tot}")
     return peso_tot,num_obj,data
 
-def prop_data(peso_tot,num_obj,data):
+def prop_data(num_obj,data):
     data["prop"]=data["weight"]/data["imp"]
     data=data.iloc[2:int(num_obj)][:]
     data_sort=data.sort_values("prop")
-    return peso_tot, num_obj, data, data_sort
+    return data, data_sort
 
 

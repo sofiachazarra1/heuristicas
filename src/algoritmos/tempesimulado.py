@@ -1,3 +1,7 @@
+from numpy import exp
+from src.algoritmos.greedy import greedy_mochila
+from src.algoritmos.busqueda_local import busqueda_local
+
 def N(T):
     """Criterio de parada basado en el número de iteraciones que ha realizado el algoritmo."""
     return T
