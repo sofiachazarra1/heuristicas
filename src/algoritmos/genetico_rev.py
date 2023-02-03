@@ -27,6 +27,7 @@ ruleta = []
 for k in range(0,poblacion_size):
     ruleta += [k]*(poblacion_size-k)
 
+###calculos de peso y valor
 def calcular_peso(x):
     peso_total = 0
     for i in range(n):
@@ -40,6 +41,7 @@ def calcular_valor(x):
         if x[i] == 1:
             valor_total += valor[i]
     return valor_total
+###calculos de peso y valor
 
 def peso_maximo_superado(x):
     peso_total = 0
@@ -59,6 +61,7 @@ def crear_poblacion_inicial():
     for i in range(poblacion_size): 
         sol = solucion_random()
         poblacion.append(sol)
+    print(poblacion)
     return poblacion
 
 
