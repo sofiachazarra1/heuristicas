@@ -43,7 +43,6 @@ class Problema_Genetico(object):
             hijos.append(random.choice([cromosoma1[i], cromosoma2[i]]))
         return hijos
 
-
 # Definimos nuestra funcion objetivo que utilizamos para elegir los genes
 def fun_obj(poblacion, peso_max, n, data):
     sol_objetivo = []
@@ -72,9 +71,6 @@ def crear_poblacion_inicial(poblacion_size, n):
         poblacion.append(solucion_random(n))
     return poblacion
 
-
-
-
 def muta_individuos(problema_genetico, poblacion, mejor_anterior, prob, peso_max, data, num_obj):
     mutacion = list(map(lambda x: problema_genetico.mutacion(x, prob), poblacion))
     mutacion = fun_obj(mutacion, peso_max, num_obj, data)
@@ -82,8 +78,6 @@ def muta_individuos(problema_genetico, poblacion, mejor_anterior, prob, peso_max
         mutacion.pop()
         mutacion = [mejor_anterior] + mutacion
     return mutacion
-
-
 
 def competicion(problema_genetico, poblacion, num_obj, peso_max, data, sol_rep):
     mejor_anterior = poblacion[0][:] #cogemos la primera solucion de la poblacion
@@ -118,7 +112,6 @@ def genetico(data, peso_max, num_obj, prob_mutar, sol_rep, iteraciones, poblacio
     #Crea una lista con nº: poblacion_size de poblaciones iniciales. Cada poblacion inicial tiene una longitud de num_obj
     poblacion = crear_poblacion_inicial(poblacion_size, num_obj)
 
-
     #A la poblacion inicial le aplicamos nuestra funcion objetivo
     poblacion = fun_obj(poblacion, peso_max, num_obj, data)
 
@@ -129,10 +122,10 @@ def genetico(data, peso_max, num_obj, prob_mutar, sol_rep, iteraciones, poblacio
     for i in range(cuad_gen.iteraciones):
         poblacion, mejor_anterior = competicion(cuad_gen, poblacion, num_obj, peso_max, data, sol_rep)
         poblacion = muta_individuos(cuad_gen, poblacion, mejor_anterior, prob_mutar, peso_max, data, num_obj)
-
     end=time.time()
 
     print("Usando un algoritmo: GENETICO \n" + " Solución: " + str(poblacion[0]) + "\n Valor: " + str(
         aux.calcular_valor(data["imp"], poblacion[0], num_obj))+ "\n Peso: " + str(aux.calcular_peso(data["weight"], poblacion[0], num_obj)) + "\n Tiempo de cómputo = " + str(
         1000 * (end - start)) + " ms")
+
     return poblacion[0]
