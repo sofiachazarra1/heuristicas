@@ -71,7 +71,8 @@ def funcion_aptitud(poblacion):
         if peso_maximo_superado(sol): # Si supera el peso maximo entonces su valor será -(cantidad peso por encima del maximo)
             valor = peso_max - calcular_peso(sol)
         else:
-            valor = calcular_valor(sol)    
+            valor = calcular_valor(sol)
+            print(valor)
         aptitud.append([valor, sol])
     
     aptitud.sort(reverse=True) #para que me lo ordene de menor coste a mayor con su cromosoma asociado
@@ -82,6 +83,8 @@ def cruce(sol1, sol2): # Cruce uniforme
     sol_nuevo = []
     for i in range(n):
         sol_nuevo.append(random.choice([sol1[i], sol2[i]]))
+    print("sol_nuevo")
+    print(sol_nuevo)
     return sol_nuevo
 
 def seleccion_y_reproduccion(poblacion): #Seleccion de ruleta + elitismo
@@ -91,6 +94,7 @@ def seleccion_y_reproduccion(poblacion): #Seleccion de ruleta + elitismo
     orden = []  
     for _ in range(n_sol_para_reproducir): #cuantos cromosomas queremos seleccionar
         orden.append(random.choice(ruleta))
+
       
     #REPRODUCCION
     sol_nuevos= []        
@@ -98,9 +102,11 @@ def seleccion_y_reproduccion(poblacion): #Seleccion de ruleta + elitismo
         sol_nuevo = cruce(poblacion[orden[2*j]], poblacion[orden[2*j+1]])
         sol_nuevos.append(sol_nuevo)
 
+
     for _ in range(n_sol_para_reproducir//2):
         poblacion.pop() #Eliminamos el ultimo (el que menos valor posee)
     poblacion += sol_nuevos #Añadimos los hijos
+
     poblacion = funcion_aptitud(poblacion) #Evaluamos y ordenamos
     
     return poblacion, mejor_anterior
@@ -111,6 +117,9 @@ def mutacion(poblacion, mejor_anterior):
             for _ in range(1, random.randint(1, max_genes_mutan)): 
                 numero = random.randint(0, n-1)
                 poblacion[j][numero] = 1 - poblacion[j][numero]
+    print("mutacion")
+    print(poblacion)
+    print("adios")
     poblacion = funcion_aptitud(poblacion)
     if calcular_valor(poblacion[0]) < calcular_valor(mejor_anterior): #Si no se ha superado el de la mejor iteracion le volvemos a incluir
         poblacion.pop()
@@ -126,6 +135,11 @@ poblacion = funcion_aptitud(poblacion)
     
 for i in range(iteraciones):
     poblacion, mejor_anterior = seleccion_y_reproduccion(poblacion)
+    print("poblacion")
+    print(poblacion)
+    print(len(poblacion))
+    print("mejor_anterior")
+    print(len(mejor_anterior))
     poblacion = mutacion(poblacion, mejor_anterior)
 
 tac = time.process_time()
