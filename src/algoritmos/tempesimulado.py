@@ -2,7 +2,6 @@ from numpy import exp
 from src.algoritmos.greedy import greedy_mochila
 from src.algoritmos.busqueda_local import busqueda_local
 import time
-import src.auxiliares.read_data as aux
 
 def N(T):
     """Criterio de parada basado en el número de iteraciones que ha realizado el algoritmo."""
@@ -15,20 +14,15 @@ def C(data):
 
 def temple_simulado(sort_data,peso_tot,data):
     start = time.time()
-    solucion = greedy_mochila(sort_data, data, peso_tot)
+    solucion = greedy_mochila(sort_data, peso_tot, data, False)
     solucion_start = solucion
     t = 12345
     u = 0
     while t > 0:
         n = 0
-        print(n)
         while n <= N(t):
-            print(n)
-            solucion_bus, peso_busqueda_local = busqueda_local(sort_data, peso_tot)
-            print(solucion_bus)
-            print(solucion_start)
+            solucion_bus, peso_busqueda_local = busqueda_local(sort_data, peso_tot, False)
             delta = C(solucion_bus) - C(solucion_start)
-            print(delta)
             if delta < 0:
                 solucion_start = solucion_bus
                 if C(solucion) < C(solucion_start):
