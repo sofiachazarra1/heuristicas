@@ -7,7 +7,6 @@ def busqueda_local(data, M):
     def mejor_objeto_restante(data):
         mejor_obj = data.index[0]
         return mejor_obj - 2, data.drop(mejor_obj)
-
     n = len(peso)
     solucion = [0 for i in range(n)]  # creamos una solucion inicial con un vector de 0's
     peso_actual = 0
@@ -24,16 +23,6 @@ def busqueda_local(data, M):
 
     print("Usando un algoritmo de busqueda local para el problema de la mochila"
          " \n" + " Solución: " + str(solucion) + "\n Número de elementos: "
-         + str(sum(solucion)) + "\n Peso: " + str(peso_actual) + "\n"
+         + str(sum(solucion)) + "\n Peso: " + str(peso_m) + "\n"
         " Tiempo de cómputo = " + str(1000 * (end - start)) + " ms")
     return solucion, peso_m
-
-###Para ejecutarlo directamente
-"""
-path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
-file="00Uncorrelated/n00050/R01000/s001.kp"
-
-peso_tot,num_obj,data=aux.read_data(path_data, file)
-data,sort_data=aux.prop_data(num_obj,data)
-busqueda_local(sort_data,peso_tot)
-"""

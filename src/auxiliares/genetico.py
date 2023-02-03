@@ -192,7 +192,6 @@ cuad_gen = Problema_Genetico([0, 1], poblacion, poblacion_size, fun_obj, iteraci
 
 
 res = algoritmo_genetico_t(cuad_gen, num_obj, data, peso_tot, 50, 0.7, 0.1)
-breakpoint()
 end = time.process_time()
 ###############################################################################################################################
 

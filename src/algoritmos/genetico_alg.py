@@ -85,63 +85,54 @@ def muta_individuos(problema_genetico, poblacion, mejor_anterior, prob, peso_max
 
 
 
-def competicion(problema_genetico, poblacion, num_obj, peso_max, data):
+def competicion(problema_genetico, poblacion, num_obj, peso_max, data, sol_rep):
     mejor_anterior = poblacion[0][:] #cogemos la primera solucion de la poblacion
-    participantes = problema_genetico.longitud_individuos
+    sol_rep=int(sol_rep*2)
     sol_participantes = []
     ruleta=[]
 
     #participantes a elegir
-    for k in range(0, participantes):
-        ruleta += [k] * (participantes - k)
-    for _ in range(participantes):
+    for k in range(0, sol_rep):
+        ruleta += [k] * (sol_rep - k)
+    for _ in range(sol_rep):
         sol_participantes.append(random.choice(ruleta))
 
     # REPRODUCCION
     sol_nuevos = []
     #los hijos
 
-    for j in range(participantes // 2):
+    for j in range(sol_rep // 2):
         sol_nuevo = problema_genetico.cruce(poblacion[sol_participantes[2 * j]], poblacion[sol_participantes[2 * j + 1]], num_obj)
         sol_nuevos.append(sol_nuevo)
 
 
-    for _ in range(participantes  // 2):
+    for _ in range(sol_rep  // 2):
         poblacion.pop()
 
     poblacion = poblacion + sol_nuevos
     poblacion = fun_obj(poblacion, peso_max, num_obj, data)
     return poblacion, mejor_anterior
 
+def genetico(data, peso_max, num_obj, prob_mutar, sol_rep, iteraciones, poblacion_size):
+
+    #Crea una lista con nº: poblacion_size de poblaciones iniciales. Cada poblacion inicial tiene una longitud de num_obj
+    poblacion = crear_poblacion_inicial(poblacion_size, num_obj)
 
 
-####LECTURA DATA
-path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
-file="00Uncorrelated/n00050/R01000/s001.kp"
-poblacion_size = 51
-iteraciones = 20
-prob_mutar=0.2
+    #A la poblacion inicial le aplicamos nuestra funcion objetivo
+    poblacion = fun_obj(poblacion, peso_max, num_obj, data)
 
-#num objeto tiene el tamaño de la muestra
-peso_max, num_obj, data = aux.read_data(path_data, file)
+    # Instanciamos nuestro problema genetico
+    cuad_gen = Problema_Genetico([0, 1], poblacion, poblacion_size, iteraciones)
 
-#Crea una lista con nº: poblacion_size de poblaciones iniciales. Cada poblacion inicial tiene una longitud de num_obj
-poblacion = crear_poblacion_inicial(poblacion_size, num_obj)
+    start=time.time()
+    for i in range(cuad_gen.iteraciones):
+        poblacion, mejor_anterior = competicion(cuad_gen, poblacion, num_obj, peso_max, data, sol_rep)
+        poblacion = muta_individuos(cuad_gen, poblacion, mejor_anterior, prob_mutar, peso_max, data, num_obj)
 
+    end=time.time()
 
-#A la poblacion inicial le aplicamos nuestra funcion objetivo
-poblacion = fun_obj(poblacion, peso_max, num_obj, data)
-
-# Instanciamos nuestro problema genetico
-cuad_gen = Problema_Genetico([0, 1], poblacion, poblacion_size, iteraciones)
-
-start=time.time()
-for i in range(cuad_gen.iteraciones):
-    poblacion, mejor_anterior = competicion(cuad_gen, poblacion, num_obj, peso_max, data)
-    mutacion = muta_individuos(cuad_gen, poblacion, mejor_anterior, prob_mutar, peso_max, data, num_obj)
-
-end=time.time()
-
-print("Usando un algoritmo: GENETICO \n" + " Solución: " + str(poblacion[0]) + "\n Valor: " + str(
-    aux.calcular_valor(data["imp"], poblacion[0], num_obj))+ "\n Peso: " + str(aux.calcular_peso(data["weight"], poblacion[0], num_obj)) + "\n Tiempo de cómputo = " + str(
-    1000 * (end - start)) + " ms")
+    print("Usando un algoritmo: GENETICO \n" + " Solución: " + str(poblacion[0]) + "\n Valor: " + str(
+        aux.calcular_valor(data["imp"], poblacion[0], num_obj))+ "\n Peso: " + str(aux.calcular_peso(data["weight"], poblacion[0], num_obj)) + "\n Tiempo de cómputo = " + str(
+        1000 * (end - start)) + " ms")
+    return poblacion[0]

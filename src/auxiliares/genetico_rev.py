@@ -135,11 +135,6 @@ poblacion = funcion_aptitud(poblacion)
     
 for i in range(iteraciones):
     poblacion, mejor_anterior = seleccion_y_reproduccion(poblacion)
-    print("poblacion")
-    print(poblacion)
-    print(len(poblacion))
-    print("mejor_anterior")
-    print(len(mejor_anterior))
     poblacion = mutacion(poblacion, mejor_anterior)
 
 tac = time.process_time()

@@ -1,7 +1,6 @@
 import time
-import src.auxiliares.read_data as aux
-from src.algoritmos.busqueda_local import busqueda_local
-def greedy_mochila(sort_data,data,peso_tot):
+
+def greedy_mochila(sort_data,peso_tot, data):
     start=time.time()
     agg_weight=0
     i=1
@@ -18,14 +17,3 @@ def greedy_mochila(sort_data,data,peso_tot):
           + str(sum(vect_ind)) + "\n Peso: " + str(agg_weight) + "\n"
         " Tiempo de cómputo = " + str(1000 * (end - start)) + " ms")
     return vect_ind
-
-
-###Para ejecutarlo directamente
-"""
-path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
-file="00Uncorrelated/n00050/R01000/s001.kp"
-
-peso_tot,num_obj,data=aux.read_data(path_data, file)
-data,sort_data=aux.prop_data(num_obj,data)
-greedy_mochila(sort_data,data,peso_tot)
-"""
