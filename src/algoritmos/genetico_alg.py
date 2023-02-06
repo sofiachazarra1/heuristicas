@@ -5,7 +5,7 @@ import csv
 
 class Problema_Genetico(object):
     """ Clase para representar un problema para que sea abordado mediante un
-    algoritmo genetico general. Consta de los siguientes atributos:
+        algoritmo genetico general. Consta de los siguientes atributos:
     - genes: lista de posibles genes en un cromosoma [0,1] Un gen por variable de decisión binaria
     - decodifica: lista inicial de cromosomas
     - longitud_individuos: nº de cromosomas
