@@ -27,6 +27,7 @@ class Problema_Genetico(object):
         for g in cromosoma:
             if random.random() < prob:
                 resultado.append(random.choice(self.genes))
+
             else:
                 resultado.append(g)
 
