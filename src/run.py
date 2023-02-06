@@ -5,8 +5,9 @@ from src.algoritmos.greedy import greedy_mochila
 from src.algoritmos.genetico_alg import genetico
 
 path_data = "C:/Users/sofia.chazarra/OneDrive - Accenture/Documents/MasterUCM/OptimizacionII/DatosMochila/kplib-master/"
-file = "00Uncorrelated/n00050/R01000/s001.kp"
-
+file = "01WeaklyCorrelated/n00050/R01000/s000.kp"
+#file = "02StronglyCorrelated/n00200/R10000/s000.kp"
+#file = "03InverseStronglyCorrelated/n01000/R10000/s001.kp"
 peso_tot, num_obj, data = aux.read_data(path_data, file)
 data, sort_data = aux.prop_data(data)
 
