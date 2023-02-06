@@ -3,12 +3,14 @@ import src.auxiliares.read_data as aux
 from src.algoritmos.greedy import greedy_mochila
 import random
 
-def busquedalocal(sort_data, pesomax, data, M, showprint=True):
+def busquedalocal(sort_data, pesomax, data, M, showprint=True, entorno=0):
     start = time.time()
-    entorno = int(random.choice([0, 1, 2]))
+    if entorno==0:
+        entorno = int(random.choice([0, 1, 2]))
     sacar = 0
     meter = 0
     solucion, peso_solucion = greedy_mochila(sort_data, pesomax, data, False)
+
     valor_solucion = aux.calcular_valor(data["imp"], solucion, M)
     if entorno == 0:
         while sacar + meter < 3:
@@ -31,7 +33,6 @@ def busquedalocal(sort_data, pesomax, data, M, showprint=True):
     if entorno == 1:
         while sacar + meter < 2:
             parada = int(random.choice(range(0, M)))
-            print("el entorno es" + str(entorno) +"y la parada es:" + str(parada))
             if solucion[parada] == 1:  # sacar un elemento
                 solucion[parada] = 0.0
                 peso_solucion = peso_solucion - data["weight"].tolist()[parada]
@@ -39,7 +40,6 @@ def busquedalocal(sort_data, pesomax, data, M, showprint=True):
                 sacar = sacar + 1
             if sacar == 1:
                 parada = int(random.choice(range(0, M)))
-                print("Scar1: el entorno es" + str(entorno) + "y la parada es:" + str(parada))
                 if peso_solucion + data["weight"].tolist()[parada] < pesomax:
                     if solucion[parada] == 0:
                         solucion[parada] = 1.0

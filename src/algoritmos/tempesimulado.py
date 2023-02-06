@@ -1,11 +1,14 @@
 from numpy import exp
 from src.algoritmos.greedy import greedy_mochila
-from src.algoritmos.busqueda_local import busqueda_local
+
+import src.auxiliares.read_data as aux
+from src.algoritmos.busquedalocal import busquedalocal
 import time
 import random
 def N(t):
     """Criterio de parada basado en el número de iteraciones que ha realizado el algoritmo."""
     iteraciones = random.choice(range(t))
+    print("Condicion de parada: "+str(iteraciones))
     return iteraciones
 
 def C(data):
@@ -13,17 +16,16 @@ def C(data):
 
     return sum(data)
 
-def temple_simulado(sort_data,peso_tot,data):
+def tempe_simulado(sort_data,peso_tot,data, num_obj):
     start = time.time()
-    solucion = greedy_mochila(sort_data, peso_tot, data, False)
-    print(solucion)
+    solucion, peso_mochila = greedy_mochila(sort_data, peso_tot, data, False)
     solucion_start = solucion
     t = 200
     u = 0
     while t > 0:
         n = 0
         while n <= N(t):
-            solucion_bus, peso_busqueda_local = busqueda_local(data, peso_tot, False)
+            solucion_bus = busquedalocal(sort_data, peso_tot, data, num_obj, False)
             delta = C(solucion_bus) - C(solucion_start)
             if delta < 0:
                 solucion_start = solucion_bus
@@ -37,6 +39,7 @@ def temple_simulado(sort_data,peso_tot,data):
     end = time.time()
     print("Usando un algoritmo de tempe simulado con el critero de parada establecido."
           " \n" + " Solución: " + str(solucion) + "\n Número de elementos: "
-          + str(n) + " Tiempo de cómputo = " + str(1000 * (end - start)) + " ms")
+          + str(sum(solucion))  + "\n Peso: "
+          + str(aux.calcular_peso(data["weight"], solucion, num_obj)) + "\n Tiempo de cómputo = " + str(1000 * (end - start)) + " ms")
     return solucion
 
